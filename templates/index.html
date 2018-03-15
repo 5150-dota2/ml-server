@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{{ url_for("static", filename="json-formatter.css")}}">
+    <link rel="stylesheet" href="{{ url_for("static", filename="index.css")}}">
+    <title>Bot Logging</title>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+  </body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <script src="{{ url_for("static", filename="json-formatter.js") }}"></script>
+  <script>
+    $(document).ready(function() {
+      var socket = io("http://localhost:5000");
+      socket.on("log", function(data) {
+        console.log(data);
+        var node = $("<div>", {"class": "node"});
+        node.JSONView(JSON.stringify(data), {collapsed: true})
+        $("#root").append(node);
+      });
+    });
+  </script>
+</html>
