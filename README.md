@@ -5,6 +5,7 @@ Purpose: The dota 2 bot will communicate with this `python` server to determine 
 Prereqs:
 * Python3
 
+Steps:
 1. Clone the repo: `git clone https://github.com/5150-dota2/ml-server.git`
 2. Create a python3 virtual environment: run `python3 -m venv venv`. This will create a virtualenv inside a folder named `venv`
 3. Activate virtualenv: `source venv/bin/activate`
