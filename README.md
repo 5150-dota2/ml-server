@@ -1,5 +1,5 @@
 # ml-server
-Purpose: The dota 2 bot will communicate with this `python` server to determine the best action to take base on input data.
+Purpose: The dota 2 bot will communicate with this `python` server to determine the best action to take based on input data.
 
 ## Run server:
 Prereqs:
@@ -12,4 +12,4 @@ Steps:
 4. Install dependencies: `pip install -r requirements.txt`
 5. Run the server: `python main.py`
 6. The server is now run at `localhost:8080`
-7. Copy `request.lua` into `bots` folder where the dota 2 script files reside as use `request:Send()` to communicate with the webserver
+7. Copy `request.lua` into `bots` folder where the dota 2 script files reside and use `request:Send()` to communicate with the webserver
