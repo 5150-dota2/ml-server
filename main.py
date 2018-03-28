@@ -1,12 +1,17 @@
 from japronto import Application
 from json import JSONDecodeError
-from random import randint
+from brain import DeepQNet
+
+net = DeepQNet(4, 9, 0.05)
 
 def main(req):
     if req.method == "POST":
         try:
             json = req.json
-            action = randint(1, json["actionListSize"])
+            signal = (json["heroX"], json["heroY"], json["heroAnimation"], json["health"])
+            reward = json["reward"]
+            action = net.update(reward, signal)
+            print(action, reward)
         except (JSONDecodeError, AttributeError) as e:
             action = 1
         return req.Response(json={"action": action})
@@ -15,4 +20,8 @@ def main(req):
 
 app = Application()
 app.router.add_route("/", main)
-app.run(reload=True, debug=True)
+
+try:
+    app.run(reload=True, debug=True)
+except KeyboardInterrupt as e:
+    print("Exitting...")
