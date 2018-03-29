@@ -3,13 +3,15 @@ from json import JSONDecodeError
 from brain import DeepQNet
 
 
-ckpt_path = "ckpt 2018-03-29 04.16.16.brain"
+ckpt_path = "ckpt 2018-03-29 04.16.16.brain" # Path to checkpoint
 net = DeepQNet(9, 8, 0.9, ckpt_path)
 
 def main(req):
     if req.method == "POST":
         try:
             json = req.json
+
+            # Parsing game state
             signal = (
                 json["team"],
                 json["isAlive"],
@@ -21,8 +23,15 @@ def main(req):
                 json["heroAnimation"],
                 json["health"],
             )
+
+            # Reward of choosing previous action
             reward = json["reward"]
-            action = net.update(reward, signal) + 1 # Because lua index starts at 1
+
+            # Update the Deep Q Net with new state and the reward transitioning from
+            # the previou state to this new state
+            action = net.update(reward, signal) + 1
+
+            # Printing out some stats
             print(action, reward)
         except (JSONDecodeError, AttributeError) as e:
             print("Error")
