@@ -4,7 +4,7 @@ from brain import DeepQNet
 
 
 ckpt_path = "ckpt 2018-03-29 04.16.16.brain" # Path to checkpoint
-net = DeepQNet(9, 8, 0.9, ckpt_path)
+net = DeepQNet(19, 13, 0.9, ckpt_path)
 
 def main(req):
     if req.method == "POST":
@@ -21,7 +21,16 @@ def main(req):
                 json["heroVelY"],
                 json["heroFacing"],
                 json["heroAnimation"],
+                json["enemyIsAlive"],
+                json["enemyheroX"],
+                json["enemyheroY"],
+                json["enemyheroVelX"],
+                json["enemyheroVelY"],
+                json["enemyheroFacing"],
+                json["enemyheroAnimation"],
+                json["creephealth"],
                 json["health"],
+                json["enemyhealth"],
             )
 
             # Reward of choosing previous action
