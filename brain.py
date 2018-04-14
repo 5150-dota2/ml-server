@@ -5,6 +5,9 @@ from torch.nn import functional as F
 from torch.autograd import Variable
 import random
 from datetime import datetime
+import matplotlib
+matplotlib.use("TkAgg")
+import matplotlib.pyplot as plt
 import os
 
 
@@ -23,9 +26,9 @@ class NeuralNet(nn.Module):
 
         """
         super().__init__()
-        self.c1 = nn.Linear(num_features, 30)
-        self.c2 = nn.Linear(30, 30)
-        self.c3 = nn.Linear(30, num_actions)
+        self.c1 = nn.Linear(num_features, 100)
+        self.c2 = nn.Linear(100, 100)
+        self.c3 = nn.Linear(100, num_actions)
 
     def forward(self, state):
         """Uses rectified linear unit to feed data through the network."""
@@ -69,11 +72,12 @@ class DeepQNet(object):
     """
 
     def __init__(self, num_features, num_actions, gamma, path=None):
+
         # Initialize NeuralNet with number of input and output nodes
         self.net = NeuralNet(num_features, num_actions)
 
         # Optimizer that help with backpropagation
-        self.opt = optim.Adam(self.net.parameters(), lr=0.001)
+        self.opt = optim.Adam(self.net.parameters())
 
         # Load checkpoint from disk
         if path and os.path.isfile(path):
@@ -86,7 +90,6 @@ class DeepQNet(object):
             except Exception as e:
                 print(e)
                 print("Cannot load checkpoint...")
-
         # Range 0-1
         self.gamma = gamma
 
@@ -134,7 +137,7 @@ class DeepQNet(object):
         train the neral network.
         """
 
-        # If the pool does not have enough trasitions, do no training
+        # If the pool does not have enough transitions, do no training
         if len(self.exp) < batch_size:
             return
 

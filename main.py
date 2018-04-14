@@ -3,8 +3,8 @@ from json import JSONDecodeError
 from brain import DeepQNet
 
 
-ckpt_path = "ckpt 2018-03-29 04.16.16.brain" # Path to checkpoint
-net = DeepQNet(9, 8, 0.9, ckpt_path)
+ckpt_path = "" # Path to checkpoint
+net = DeepQNet(num_features=14, num_actions=8, gamma=0.9, path=ckpt_path)
 
 def main(req):
     if req.method == "POST":
@@ -22,6 +22,11 @@ def main(req):
                 json["heroFacing"],
                 json["heroAnimation"],
                 json["health"],
+                json["numberOfNearbyEnemyTowers"],
+                json["numberOfNearbyAlliedTowers"],
+                json["numberOfNearbyAlliedCreeps"],
+                json["numberOfNearbyAlliedCreeps"],
+                json["dotaTime"],
             )
 
             # Reward of choosing previous action
@@ -33,6 +38,7 @@ def main(req):
 
             # Printing out some stats
             print(action, reward)
+            # print(json["frame"])
         except (JSONDecodeError, AttributeError) as e:
             print("Error")
             action = 1
