@@ -104,32 +104,32 @@ class DeepQNet(object):
         self.last_action = {2: 0, 3: 0}
         self.last_reward = {2: 0, 3: 0}
 
-    def update(self, reward, current_signal):
-        team = current_signal[0]
+    def update(self, team, reward, current_signal):
         current_state = torch.Tensor(current_signal).float().unsqueeze(0)
         self.exp.push(
             (self.last_state[team], current_state,
             torch.LongTensor([int(self.last_action[team])]), torch.Tensor([self.last_reward[team]])))
         action = self.select_action(current_state)
-        self.learn(100)
+        self.learn(50)
         self.last_action[team] = action
         self.last_state[team] = current_state
         self.last_reward[team] = reward
+        print(action)
         return action
 
     def select_action(self, state):
         """Selects actions based on Q-values."""
 
         # Gets Q-values of all action
-        out = self.net(Variable(state, volatile=True))
+        q_values = self.net(Variable(state, volatile=True))
 
         # Pass the result through softmax to get distribution that sums
         # up to 1. The number is tempurature, it there to give the softmax
         # function more confidence
-        probs = F.softmax(out*100)
+        probabilities = F.softmax(q_values)
 
         # Use multinomial function to sample from the distribution
-        return probs.multinomial().data[0, 0]
+        return probabilities.multinomial().data[0, 0]
 
     def learn(self, batch_size):
         """

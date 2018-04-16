@@ -3,8 +3,8 @@ from json import JSONDecodeError
 from brain import DeepQNet
 
 
-ckpt_path = "" # Path to checkpoint
-net = DeepQNet(num_features=14, num_actions=8, gamma=0.9, path=ckpt_path)
+ckpt_path = "has_last_hitting.brain" # Path to checkpoint
+net = DeepQNet(num_features=15, num_actions=9, gamma=0.9, path=ckpt_path)
 
 def main(req):
     if req.method == "POST":
@@ -13,20 +13,23 @@ def main(req):
 
             # Parsing game state
             signal = (
-                json["team"],
-                json["isAlive"],
+                # json["team"],
+                # 1 if json["isAlive"] else 0,
                 json["heroX"],
                 json["heroY"],
                 json["heroVelX"],
                 json["heroVelY"],
                 json["heroFacing"],
                 json["heroAnimation"],
-                json["health"],
+                json["heroAADmg"],
+                json["heroAttackSpeed"],
+                json["numberOfNearbyEnemyHeroes"],
                 json["numberOfNearbyEnemyTowers"],
                 json["numberOfNearbyAlliedTowers"],
+                json["numberOfNearbyEnemyCreeps"],
                 json["numberOfNearbyAlliedCreeps"],
-                json["numberOfNearbyAlliedCreeps"],
-                json["dotaTime"],
+                json["numberOfNearbyNeutralCreeps"],
+                json["lowestEnemyCreepHealth"],
             )
 
             # Reward of choosing previous action
@@ -34,11 +37,12 @@ def main(req):
 
             # Update the Deep Q Net with new state and the reward transitioning from
             # the previou state to this new state
-            action = net.update(reward, signal) + 1
+            # Note: + 1 because Lua index starts at 1
+            action = net.update(json["team"], reward, signal) + 1
+
 
             # Printing out some stats
             print(action, reward)
-            # print(json["frame"])
         except (JSONDecodeError, AttributeError) as e:
             print("Error")
             action = 1
