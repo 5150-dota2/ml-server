@@ -3,13 +3,14 @@ from json import JSONDecodeError
 from brain import DeepQNet
 
 
-ckpt_path = "ckpt 2018-03-29 04.16.16.brain" # Path to checkpoint
-net = DeepQNet(19, 13, 0.9, ckpt_path)
+ckpt_path = "ckpt 2018-03-29 05.05.07.brain" # Path to checkpoint
+net = DeepQNet(18, 13, 0.9, ckpt_path)
 
 def main(req):
     if req.method == "POST":
         try:
             json = req.json
+#            print(json)
 
             # Parsing game state
             signal = (
