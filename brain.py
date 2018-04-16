@@ -114,7 +114,6 @@ class DeepQNet(object):
         self.last_action[team] = action
         self.last_state[team] = current_state
         self.last_reward[team] = reward
-        print(action)
         return action
 
     def select_action(self, state):
