@@ -154,7 +154,7 @@ class DeepQNet(object):
 
         # Back propagations using optimizer happen here
         self.opt.zero_grad()
-        td_error.backward(retain_graph=True)
+        td_error.backward(retain_variables=True)
         self.opt.step()
 
 
