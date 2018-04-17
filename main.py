@@ -3,7 +3,7 @@ from json import JSONDecodeError
 from brain import DeepQNet
 
 
-ckpt_path = "has_last_hitting.brain" # Path to checkpoint
+ckpt_path = "has_last_hitting_2.brain" # Path to checkpoint
 net = DeepQNet(num_features=15, num_actions=9, gamma=0.9, path=ckpt_path)
 
 def main(req):
@@ -13,8 +13,6 @@ def main(req):
 
             # Parsing game state
             signal = (
-                # json["team"],
-                # 1 if json["isAlive"] else 0,
                 json["heroX"],
                 json["heroY"],
                 json["heroVelX"],
@@ -39,7 +37,6 @@ def main(req):
             # the previou state to this new state
             # Note: + 1 because Lua index starts at 1
             action = net.update(json["team"], reward, signal) + 1
-
 
             # Printing out some stats
             print(action, reward)

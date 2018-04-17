@@ -20,8 +20,8 @@ class NeuralNet(nn.Module):
         """
         Initialize the network with:
             - Input layer with `num_features` nodes
-            - Hidden layer 1 with 30 nodes
-            - Hidden layer 2 with 30 nodes
+            - Hidden layer 1 with 100 nodes
+            - Hidden layer 2 with 100 nodes
             - Output layer with `num_actions` nodes
 
         """
