@@ -3,7 +3,7 @@ from json import JSONDecodeError
 from brain import DeepQNet
 
 
-ckpt_path = "final_last_hitting.brain" # Path to checkpoint
+ckpt_path = "final.brain" # Path to checkpoint
 net = DeepQNet(num_features=15, num_actions=9, gamma=0.9, path=ckpt_path)
 
 def main(req):
