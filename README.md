@@ -3,7 +3,7 @@ Purpose: The dota 2 bot will communicate with this `python` server to determine 
 
 ## Setup instruction 
 
-Instruction video coming soon....
+[![Instructions](https://img.youtube.com/vi/hyvSAWpCjRQ/0.jpg)](https://www.youtube.com/watch?v=hyvSAWpCjRQ)
 
 ## Run server:
 Prereqs:
