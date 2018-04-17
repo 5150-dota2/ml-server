@@ -1,6 +1,10 @@
 # ml-server
 Purpose: The dota 2 bot will communicate with this `python` server to determine the best action to take based on input data.
 
+## Setup instruction 
+
+Instruction video coming soon....
+
 ## Run server:
 Prereqs:
 * Python3
