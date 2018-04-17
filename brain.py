@@ -5,9 +5,6 @@ from torch.nn import functional as F
 from torch.autograd import Variable
 import random
 from datetime import datetime
-import matplotlib
-matplotlib.use("TkAgg")
-import matplotlib.pyplot as plt
 import os
 
 
@@ -105,7 +102,7 @@ class DeepQNet(object):
         self.last_reward = {2: 0, 3: 0}
 
     def update(self, team, reward, current_signal):
-        current_state = torch.Tensor(current_signal).float().unsqueeze(0)
+        current_state = torch.FloatTensor(current_signal).unsqueeze(0)
         self.exp.push(
             (self.last_state[team], current_state,
             torch.LongTensor([int(self.last_action[team])]), torch.Tensor([self.last_reward[team]])))
@@ -157,7 +154,7 @@ class DeepQNet(object):
 
         # Back propagations using optimizer happen here
         self.opt.zero_grad()
-        td_error.backward(retain_variables=True)
+        td_error.backward(retain_graph=True)
         self.opt.step()
 
 
